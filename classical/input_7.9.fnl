@@ -32,11 +32,11 @@ nblist_skin 2.
 # format of the trajectory file (supported: xyz, arc, extxyz)
 traj_format arc
 #time between each saved frame
-tdump[fs] = 20
+tdump[fs] = 25
 
 # number of steps between each printing of the energy
 nprint = 10
-nsummary = 100
+nsummary = 1000
 
 ## set the thermostat
 #thermostat  NVE 
