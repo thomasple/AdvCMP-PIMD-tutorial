@@ -264,8 +264,8 @@ def radial_from_file(
             all_distances = np.linalg.norm(vec,axis=-1)
             distances = np.sort(all_distances,axis=1)[:,:2]
             if nframe == 1:
-              iObond = np.argmin(all_distances,axis=1)
-            OHmin = np.mean(all_distances[:,iObond])
+              iObond = np.arange(len(H_indices))*len(O_indices) + np.argmin(all_distances,axis=1)
+            OHmin = np.mean(all_distances.flatten()[iObond])
             OHmin_sum += OHmin
               
             xi = distances[:,1]-distances[:,0]
@@ -279,10 +279,10 @@ def radial_from_file(
             )  
             vec = vec + np.einsum("ij,asj->asi", cell, shift)
             all_distances = np.linalg.norm(vec,axis=-1)
-            distances = np.sort(all_distances,axis=1)[:,:8]
+            distances = np.sort(all_distances,axis=1)[:,1:9]
             OOmean_sum += np.mean(distances)
 
-            np.savetxt(f'OHmin_OO_{abox:1.f}.dat',(abox,OHmin_sum/nframe,OOmean_sum/nframe))
+            np.savetxt(f'OHmin_OO_{abox:.1f}.dat',np.array((abox,OHmin_sum/nframe,OOmean_sum/nframe))[None,:])
 
             
 
