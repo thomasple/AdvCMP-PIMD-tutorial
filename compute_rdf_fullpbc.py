@@ -230,6 +230,8 @@ def radial_from_file(
         header = " ".join(["r"] + ["-".join(p.split()) for p in pairs])
         box = None
         gr_avg = np.zeros((n_bins, len(pairs)))
+        OHmin_sum = 0
+        OOmean_sum = 0
         for frame in reader:
             species, xyz, box = frame
             if box is not None:
@@ -259,11 +261,28 @@ def radial_from_file(
                 np.einsum("ij,asj->asi", cellinv, vec)
             )  
             vec = vec + np.einsum("ij,asj->asi", cell, shift)
-            distances = np.sort(np.linalg.norm(vec,axis=-1),axis=1)[:,:2]
+            all_distances = np.linalg.norm(vec,axis=-1)
+            distances = np.sort(all_distances,axis=1)[:,:2]
+            if nframe == 1:
+              iObond = np.argmin(all_distances,axis=1)
+            OHmin = np.mean(all_distances[:,iObond])
+            OHmin_sum += OHmin
+              
             xi = distances[:,1]-distances[:,0]
             hist,_ = np.histogram(xi,bins=bins,density=False)
             hist_full = hist_full + hist
             np.savetxt(f'diffOH_{abox:.1f}.dat',np.column_stack((bin_centers,hist_full/nframe/len(H_indices))))
+
+            vec = xyz[O_indices,None,:]-xyz[None,O_indices,:]
+            shift = -np.round(
+                np.einsum("ij,asj->asi", cellinv, vec)
+            )  
+            vec = vec + np.einsum("ij,asj->asi", cell, shift)
+            all_distances = np.linalg.norm(vec,axis=-1)
+            distances = np.sort(all_distances,axis=1)[:,:8]
+            OOmean_sum += np.mean(distances)
+
+            np.savetxt(f'OHmin_OO_{abox:1.f}.dat',(abox,OHmin_sum/nframe,OOmean_sum/nframe))
 
             
 
