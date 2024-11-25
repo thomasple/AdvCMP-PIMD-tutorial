@@ -282,7 +282,7 @@ def radial_from_file(
             distances = np.sort(all_distances,axis=1)[:,1:9]
             OOmean_sum += np.mean(distances)
 
-            np.savetxt(f'OHmin_OO_{abox:.1f}.dat',np.array((abox,OHmin_sum/nframe,OOmean_sum/nframe))[None,:])
+            np.savetxt(f'OHmin_OO_{abox:.1f}.dat',np.array((abox,OHmin_sum/nframe,OOmean_sum/nframe, OHmin_sum/OOmean_sum))[None,:])
 
             
 
