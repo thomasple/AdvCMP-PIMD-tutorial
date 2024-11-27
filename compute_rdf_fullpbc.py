@@ -249,7 +249,7 @@ def radial_from_file(
             # plt.plot(centers,gr_avg/nframe)
             # plt.pause(1.)
             np.savetxt(
-                f'gr_{abox:.1f}.dat', np.column_stack((centers, gr_avg / nframe)), header=header
+                f'gr_{abox:.2f}.dat', np.column_stack((centers, gr_avg / nframe)), header=header
             )
 
             # get distance difference
@@ -271,7 +271,7 @@ def radial_from_file(
             xi = distances[:,1]-distances[:,0]
             hist,_ = np.histogram(xi,bins=bins,density=False)
             hist_full = hist_full + hist
-            np.savetxt(f'diffOH_{abox:.1f}.dat',np.column_stack((bin_centers,hist_full/nframe/len(H_indices))))
+            np.savetxt(f'diffOH_{abox:.2f}.dat',np.column_stack((bin_centers,hist_full/nframe/len(H_indices))))
 
             vec = xyz[O_indices,None,:]-xyz[None,O_indices,:]
             shift = -np.round(
@@ -282,7 +282,7 @@ def radial_from_file(
             distances = np.sort(all_distances,axis=1)[:,1:9]
             OOmean_sum += np.mean(distances)
 
-            np.savetxt(f'OHmin_OO_{abox:.1f}.dat',np.array((abox,OHmin_sum/nframe,OOmean_sum/nframe, OHmin_sum/OOmean_sum))[None,:])
+            np.savetxt(f'OHmin_OO_{abox:.2f}.dat',np.array((abox,OHmin_sum/nframe,OOmean_sum/nframe, OHmin_sum/OOmean_sum))[None,:])
 
             
 
