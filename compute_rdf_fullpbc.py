@@ -263,15 +263,17 @@ def radial_from_file(
             vec = vec + np.einsum("ij,asj->asi", cell, shift)
             all_distances = np.linalg.norm(vec,axis=-1)
             distances = np.sort(all_distances,axis=1)[:,:2]
-            if nframe == 1:
-              iObond = np.arange(len(H_indices))*len(O_indices) + np.argmin(all_distances,axis=1)
-            OHmin = np.mean(all_distances.flatten()[iObond])
-            OHmin_sum += OHmin
               
             xi = distances[:,1]-distances[:,0]
             hist,_ = np.histogram(xi,bins=bins,density=False)
             hist_full = hist_full + hist
             np.savetxt(f'diffOH_{abox:.2f}.dat',np.column_stack((bin_centers,hist_full/nframe/len(H_indices))))
+
+            #if nframe == 1:
+            #  iObond = np.arange(len(H_indices))*len(O_indices) + np.argmin(all_distances,axis=1)
+            distances = np.sort(all_distances.T,axis=-1)[:,:2]
+            OHmin = np.mean(distances)
+            OHmin_sum += OHmin
 
             vec = xyz[O_indices,None,:]-xyz[None,O_indices,:]
             shift = -np.round(
