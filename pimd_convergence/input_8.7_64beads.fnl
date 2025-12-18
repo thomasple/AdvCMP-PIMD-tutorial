@@ -42,7 +42,7 @@ nsummary = 1000
 #thermostat  NVE 
 thermostat LGV 
 
-system IceVII_8.7_64beads
+system_name IceVII_8.7_64beads
 nbeads 64
 
 ## Thermostat parameters
