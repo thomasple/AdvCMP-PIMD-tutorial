@@ -313,7 +313,7 @@ def main(xyzfile: str, thermalize: int = 0, watch: bool = False, minimum_image=F
         rmax=rmax,
         dr=dr,
         indexed=True,
-        box_info=False,
+        box_info=True,
         watch=watch,
         thermalize=thermalize,
         minimum_image=minimum_image,
