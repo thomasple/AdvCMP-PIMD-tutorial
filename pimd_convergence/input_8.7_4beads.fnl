@@ -1,4 +1,4 @@
-device cuda:0
+_device cuda:0
 matmul_prec highest
 print_timings no
 model_file ../best_model.fnx
@@ -42,7 +42,7 @@ nsummary = 1000
 #thermostat  NVE 
 thermostat LGV 
 
-system IceVII_8.7_4beads
+system_name IceVII_8.7_4beads
 nbeads 4
 
 ## Thermostat parameters
