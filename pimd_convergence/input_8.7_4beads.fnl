@@ -1,4 +1,4 @@
-_device cuda:0
+device cuda:0
 matmul_prec highest
 print_timings no
 model_file ../best_model.fnx
